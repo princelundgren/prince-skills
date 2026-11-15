@@ -2,7 +2,8 @@
 
 Reports of what an agent did with these files are as welcome as pull requests: open an issue, or
 start a discussion for a question or an idea for a new rule or skill. A security problem goes
-through [SECURITY.md](SECURITY.md), never a public issue.
+through [SECURITY.md](SECURITY.md), never a public issue. Taking part means following the
+[Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## A pull request
 
