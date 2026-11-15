@@ -12,8 +12,9 @@ nothing about the maintainer's own machines, accounts, private repositories or e
   is a model call on the runner's account (`CONTRIBUTING.md`).
 - **Validate the plugin:** `claude plugin validate .`. Its warning for the missing `version`
   (`docs/design.md`) is expected.
-- **The icon** is `.claude-plugin/icon.png`. Anthropic's directory reads it only the first time the
-  plugin is saved or submitted there, so replacing it later doesn't change the listing.
+- **The plugin icon:** Anthropic's directory reads it only the first time the plugin is saved or
+  submitted there, so replacing it later doesn't change the listing. Write no bundled image's path
+  in backticks or a code block: the directory holds that for a reviewer.
 - **Hooks are CommonJS** (`require`), run by harnesses as plain `node <script>`. A `"type":
   "module"` in `package.json` breaks every hook; the generator and tests are `.mjs` instead.
 - **Rules are named `guidelines/`** because Qwen Code reads an extension's `rules/` folder
