@@ -10,8 +10,10 @@ nothing about the maintainer's own machines, accounts, private repositories or e
   `node --test test/` fails.
 - **Evals:** `claude plugin eval . --scaffold`, run by a person, never by CI or unasked: every run
   is a model call on the runner's account (`CONTRIBUTING.md`).
-- **Validate the plugin:** `claude plugin validate .`. Its warnings for the missing `version`
-  (`docs/design.md`) and icon are expected.
+- **Validate the plugin:** `claude plugin validate .`. Its warning for the missing `version`
+  (`docs/design.md`) is expected.
+- **The icon** is `.claude-plugin/icon.png`. Anthropic's directory reads it only the first time the
+  plugin is saved or submitted there, so replacing it later doesn't change the listing.
 - **Hooks are CommonJS** (`require`), run by harnesses as plain `node <script>`. A `"type":
   "module"` in `package.json` breaks every hook; the generator and tests are `.mjs` instead.
 - **Rules are named `guidelines/`** because Qwen Code reads an extension's `rules/` folder
