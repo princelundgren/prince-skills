@@ -133,6 +133,18 @@ its request: a step of your own, such as keeping a notes store true. In Claude C
   when a request fits them, and not at all under Kiro CLI's V2 harness.
 - **Hooks need `node`** on `PATH`.
 
+## Data and privacy
+
+- **What stays on your machine:** in Claude Code, `fact-check-nudge` logs to `fact-check.jsonl`
+  the session id, the length of each message it asks about, and the first 4,000 characters of the
+  reply. A reply can hold anything the session worked on. The file sits in the plugin's data
+  folder, or `~/.claude/logs` where the harness names none; it is readable only by you and grows
+  until you delete it. Uninstalling the plugin deletes its data folder by default. No other part of
+  the plugin keeps a record.
+- **What leaves it:** no hook makes a network call. The `find-docs` skill has your agent send
+  documentation questions to [Context7](https://context7.com), through its MCP server or `ctx7`
+  CLI, and read vendors' docs sites, using the tools and permissions your session already has.
+
 ## Works well with
 
 Not mine, so not published here:
