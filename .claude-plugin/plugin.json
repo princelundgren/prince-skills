@@ -9,6 +9,7 @@
   "repository": "https://github.com/princelundgren/prince-skills",
   "documentationUrl": "https://github.com/princelundgren/prince-skills#readme",
   "supportUrl": "https://github.com/princelundgren/prince-skills/issues",
+  "privacyPolicyUrl": "https://github.com/princelundgren/prince-skills#data-and-privacy",
   "license": "MIT",
   "keywords": ["rules", "skills", "fact-checking", "requirements", "design", "planning", "hooks"]
 }
