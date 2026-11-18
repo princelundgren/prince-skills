@@ -153,6 +153,10 @@ mid-work. Covers all work; `interactive-questions` covers how to ask.
    - Restate, don't reference: "as I asked above" fails
    - One line per item; a long item keeps its detail in the body and a pointer in the block
    - Bold sparingly
+   - *Needs you* and *Next* hold only the work this session was asked for. Work another session or
+     task owns (its branch, pull request or issue) goes in *Heads-up* only when it is broken, unsafe
+     or in this work's way, named as that work's and never offered; the user may still ask about it
+     or hand it over
    - No process narration in the block: findings go in *Done* or *Heads-up*, each with the check
      that showed it in a few words (`verify-before-asserting`); the steps that led there stay out
    - Skip the block on a trivial turn: a single factual answer, a one-line fix
