@@ -24,4 +24,5 @@ nothing about the maintainer's own machines, accounts, private repositories or e
 - **CI** runs on GitHub-hosted runners only, never with `pull_request_target` or `workflow_run`.
 - **Claude reviews each pull request a person opens from this repository**, once it is out of draft:
   read its `## Claude review of <sha>` summary, and fix or answer each 🔴 and 🟡 before the
-  maintainer merges. Forks, drafts and bots' pull requests get no review.
+  maintainer merges. Fix a 🔵 only in a push that also fixes something else; otherwise answer it
+  and resolve its thread. Forks, drafts and bots' pull requests get no review.
