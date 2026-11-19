@@ -42,6 +42,8 @@ signal to check.
 3. **Memory and shipped values**
    - A note recalled from a memory store is a lead, not a source: check it live too, and fix the
      note when the two differ
+   - A commit message, PR or closed issue is a record of its own day: check the current tree or
+     system before repeating its claim as current
    - Never bake an unverified value into a default, a committed config or a shipped artifact
    - A command a test pins or a config ships: run it for real against the real tool first, since a
      test that stubs the tool passes on a string that does nothing
