@@ -28,8 +28,7 @@ Covers how the code, comments and tests you write read, not how much of it to ch
      a pointer in place of the reason, or what the code already shows. It reads right to someone
      who never saw the diff.
    - No comment that restates a test.
-   - Names, small functions and clear types before any comment; never banners, changelog notes or
-     commented-out code.
+   - Names, small functions and clear types before any comment; never banners or commented-out code.
 
 4. **Errors and null**
    - An error message names what failed and on which input (never a secret's value), and what to

@@ -87,8 +87,7 @@ Covers how the code, comments and tests you write read, not how much of it to ch
      a pointer in place of the reason, or what the code already shows. It reads right to someone
      who never saw the diff.
    - No comment that restates a test.
-   - Names, small functions and clear types before any comment; never banners, changelog notes or
-     commented-out code.
+   - Names, small functions and clear types before any comment; never banners or commented-out code.
 
 4. **Errors and null**
    - An error message names what failed and on which input (never a secret's value), and what to
@@ -149,7 +148,6 @@ mid-work. Covers all work; `interactive-questions` covers how to ask.
    - **Heads-up**: found but not acted on; anything unverified or assumed
 
 2. **Discipline**
-   - A question raised mid-turn goes in *Needs you* as well
    - Restate, don't reference: "as I asked above" fails
    - One line per item; a long item keeps its detail in the body and a pointer in the block
    - Bold sparingly
@@ -158,7 +156,7 @@ mid-work. Covers all work; `interactive-questions` covers how to ask.
      or in this work's way, named as that work's and never offered; the user may still ask about it
      or hand it over
    - No process narration in the block: findings go in *Done* or *Heads-up*, each with the check
-     that showed it in a few words (`verify-before-asserting`); the steps that led there stay out
+     that showed it (`verify-before-asserting`); the steps that led there stay out
    - Skip the block on a trivial turn: a single factual answer, a one-line fix
    - A skill's own report shape (`comparing-products`) is the body; this block still closes it
 
@@ -299,8 +297,7 @@ whether to proceed, ask, or run a full adversarial pass with the `pressure-test`
    - Proceed; state assumptions inline
 
 2. **Tier 2: some ambiguity, or moderate stakes**
-   - Ask, then proceed: a multiple-choice question where there are a few real options (Claude
-     Code's `AskUserQuestion`), a plain question where the answer is open
+   - Ask as `interactive-questions` says, then proceed
    - As many questions as the ambiguity requires, no fixed cap
 
 3. **Tier 3: not one sentence, hard to reverse, or architecture-shaping**

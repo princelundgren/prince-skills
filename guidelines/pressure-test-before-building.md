@@ -8,8 +8,7 @@ whether to proceed, ask, or run a full adversarial pass with the `pressure-test`
    - Proceed; state assumptions inline
 
 2. **Tier 2: some ambiguity, or moderate stakes**
-   - Ask, then proceed: a multiple-choice question where there are a few real options (Claude
-     Code's `AskUserQuestion`), a plain question where the answer is open
+   - Ask as `interactive-questions` says, then proceed
    - As many questions as the ambiguity requires, no fixed cap
 
 3. **Tier 3: not one sentence, hard to reverse, or architecture-shaping**
