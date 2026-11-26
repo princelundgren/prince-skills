@@ -52,6 +52,19 @@ function buildRequest(extra = readExtraParagraph()) {
   return [CHECK, extra, REPLY_SHAPE].filter(Boolean).join(" ");
 }
 
+const SHORT_ANSWER = "If your last message was only a greeting, a status line, or one fact that a " +
+  "tool's output in this session already shows";
+const EXTRA_STEP_DOES_NOT_APPLY = ", and nothing else this request asks applies to this turn";
+
+/**
+ * The request for a harness whose Stop payload holds no message to measure, so it asks every turn:
+ * it opens with a line that lets the session skip a turn with nothing to check.
+ */
+function buildEveryTurnRequest(extra = readExtraParagraph()) {
+  const condition = extra ? SHORT_ANSWER + EXTRA_STEP_DOES_NOT_APPLY : SHORT_ANSWER;
+  return `${condition}, reply only "Nothing to check." Otherwise: ${buildRequest(extra)}`;
+}
+
 function isWaitingOnBackgroundWork(payload) {
   return payload.background_tasks?.length > 0 || payload.session_crons?.length > 0;
 }
@@ -104,7 +117,7 @@ function handleStop(payload) {
   process.stdout.write(`${JSON.stringify(output)}\n`);
 }
 
-module.exports = { buildRequest, readExtraParagraph };
+module.exports = { buildEveryTurnRequest, buildRequest, readExtraParagraph };
 
 if (require.main === module) {
   try {

@@ -5,7 +5,7 @@
 
 Rules, skills, agents and hooks that make coding agents check facts, own their mistakes and
 pressure-test plans before building. One plugin for Claude Code and Qwen Code, with generated forms
-for Kiro CLI and any agent that reads `SKILL.md` folders.
+for Kiro CLI, the Antigravity CLI (`agy`) and any agent that reads `SKILL.md` folders.
 
 I use these every day. They came out of watching agents state API behaviour from memory, guess
 past repeated failures, and treat a decided trade-off as a bug.
@@ -13,7 +13,7 @@ past repeated failures, and treat a decided trade-off as a bug.
 ## What's in it
 
 **Rules**, always on: in every session, and in Claude Code in every subagent too. Kiro loads two of
-them only when a request fits them (Known limits).
+them only when a request fits them, and agy nine (Known limits).
 
 | Rule | What it makes the agent do |
 |---|---|
@@ -105,6 +105,16 @@ cp kiro/hooks/*.json ~/.kiro/hooks/
 
 To update: `npx skills update -g`, then `git pull` in the clone and the three `cp` lines again.
 
+### Antigravity CLI
+
+`agy/` is an agy plugin with the rules, skills, agents and hook:
+
+```bash
+agy plugin install https://github.com/princelundgren/prince-skills/tree/main/agy
+```
+
+To update, run the same command again.
+
 ### Any other agent
 
 ```bash
@@ -118,19 +128,27 @@ them to your agent's always-on instructions.
 
 `fact-check-nudge` appends the text of the file named by `FACT_CHECK_NUDGE_EXTRA_FILE`, if set, to
 its request: a step of your own, such as keeping a notes store true. In Claude Code, set it in the
-`env` block of `settings.json`; a path starting `~/` is read from your home folder.
+`env` block of `settings.json`; a path starting `~/` is read from your home folder. agy's hook
+reads it from the environment agy starts in.
 
 ## Known limits
 
 - **Kiro over ACP** (inside Zed, for one) loads no hooks; the steering and agents still work.
+- **agy loads nine of the rules only when a request fits them.** agy shares a 20,000-token budget,
+  counted at about 3 bytes a token, among every always-on rule and `AGENTS.md` file, and past it
+  turns the largest files into pointers. So only six rules stay always on there, under 11,000
+  bytes (`AGY_ON_DEMAND` in `scripts/generate.mjs`).
+- **agy runs no `fact-check-first`**: its prompt-time event fires before every model call, not once
+  per prompt. Its agents drop the `find-docs` preload, since which folder agy's `skills:` paths
+  start from is untested.
 - **Qwen Code subagents** may not get the rules: whether an extension's `QWEN.md` reaches them is
   unverified.
 - **`fact-check-nudge` costs a turn** each time it asks, and its reply repeats the answer, so an
-  interactive session shows it twice. Kiro asks after every turn, so it shows every answer that
-  isn't skipped twice. It doesn't run under Qwen Code.
+  interactive session shows it twice. Kiro and agy ask after every turn, so they show every answer
+  that isn't skipped twice. It doesn't run under Qwen Code.
 - **The rules take about 26,000 characters of context** in every session, and in Claude Code in
   every subagent too. Kiro loads `recommend-multiagent-workflow` and `surface-shared-gotchas` only
-  when a request fits them, and not at all under Kiro CLI's V2 harness.
+  when a request fits them, and not at all under Kiro CLI's V2 harness; agy loads under 11,000.
 - **Hooks need `node`** on `PATH`.
 
 ## Data and privacy

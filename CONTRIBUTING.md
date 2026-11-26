@@ -10,7 +10,7 @@ through [SECURITY.md](SECURITY.md), never a public issue. Taking part means foll
 1. **Say what it changes in an agent's behaviour, in your own words.** The PR template asks for it;
    a generated summary doesn't tell me why you want the change.
 2. **Edit the source, then regenerate.** `guidelines/`, `skills/`, `agents/` and `hooks/*.js` are
-   the sources; `hooks/hooks.json`, `QWEN.md` and `kiro/` are generated from them:
+   the sources; `hooks/hooks.json`, `QWEN.md`, `kiro/` and `agy/` are generated from them:
 
    ```bash
    npm run generate

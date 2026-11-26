@@ -5,7 +5,7 @@ The decisions behind this repo's shape, and why. What each file does is in the R
 ## One source per file; every harness form generated from it
 
 Each rule, skill, agent and hook is one file. `scripts/generate.mjs` writes the forms each harness
-needs from them: the plugin's `hooks/hooks.json`, `QWEN.md`, and `kiro/`. CI runs
+needs from them: the plugin's `hooks/hooks.json`, `QWEN.md`, `kiro/` and `agy/`. CI runs
 `generate.mjs --check`, so a generated file can't drift from its source. Change the source, run
 `npm run generate`, commit both.
 
@@ -25,6 +25,14 @@ A Claude Code plugin ships commands, agents, skills, hooks and MCP servers, but 
   by default in Kiro, and a gotcha arises only after a fix. Kiro CLI's V2 harness loads only
   `always` files, so these two rules don't load there; the V3 harness, the default from Kiro CLI
   3.0, loads them.
+- **Antigravity CLI (`agy`):** rule files with `trigger: always_on`, or `trigger: model_decision`
+  with a description; agy drops a file with no trigger. agy counts a
+  20,000-token budget over every always-on rule and `AGENTS.md` file at about 3 bytes a token,
+  about 60,000 bytes, and past it demotes the largest files to pointers with their description. So
+  only the rules that guard every answer stay always on, within 11,000 bytes, which a test checks,
+  leaving the rest for the user's own rules and `AGENTS.md` files; the rules whose moment a request
+  names (writing code, asking a question, a mistake found) load on demand. Each always-on rule has
+  a description too, which agy shows in its place if it is demoted.
 
 The sources live in `guidelines/`, not `rules/`: Qwen Code 0.27.1 reads an extension's `rules/` as
 path-scoped rules, and skips and warns about each one with no `paths:`.
@@ -39,6 +47,13 @@ every merge to `main` is an update. The cost is that `claude plugin validate` wa
 
 Kiro's own plugin form, a power, isn't used: Kiro CLI installs a power only from Kiro's catalog or
 a local folder, loads it only on keywords in a prompt, and a power holds no hooks or steering.
+
+agy's plugin form is used: a native plugin holds rules, skills, agents and hooks, installs from a
+repository folder, and an update replaces the whole folder, so no renamed rule is left behind.
+`agy/` is that plugin rather than the repository root, whose `agents/` name Claude Code's tools and
+whose `.claude-plugin/` agy would convert as a Claude Code plugin. It carries copies of the hook
+scripts and skills, since agy runs a plugin's hooks from the plugin root. Like the Claude Code
+plugin it has no `version`, which only agy's marketplace needs.
 
 ## Hooks
 
@@ -58,6 +73,11 @@ a local folder, loads it only on keywords in a prompt, and a power holds no hook
 - **`fact-check-nudge` is off under Qwen Code**, where it is untested; each check costs a turn.
 - **Kiro's `Stop` payload holds no message**, so `kiro-fact-check-nudge` asks every turn and lets
   the session skip a turn with nothing to check, and nothing for the extra file's step to do.
+  agy's holds none either, and `agy-fact-check-nudge` asks the same way. agy fires `Stop` again
+  after the continuation it asks for, so it asks only when `executionNum` is 0, background work is
+  done (`fullyIdle`) and the model ended the turn. agy 1.5.17 sends `continuationActive: false` on
+  that second stop, though its docs say true, so the count decides. A subagent's conversation,
+  which has no `lastUserInput`, isn't asked, as Claude Code's hook asks only the main session.
 - **Your own step goes in a file**, named by `FACT_CHECK_NUDGE_EXTRA_FILE`, not in an edit to the
   hook.
 
@@ -69,7 +89,11 @@ session's tools, docs MCP servers included, which a design checked against the d
 preloads `find-docs` by its plugin name, `prince-skills:find-docs`, because a subagent starts
 without its parent's skills. Kiro's `tools:` takes category tags, and an agent with none gets no
 tools, so the generator maps each tool, fails on one it doesn't know, and gives an agent with no
-`tools:` line every tag.
+`tools:` line every tag. agy's `tools:` takes its own tool ids, and an agent with none gets a
+read-only set, so the generator maps them the same way, with `model: inherit`, the one tier agy
+shares. agy has no file-search, fetch or skill tool, so `Grep`, `Glob`, `WebFetch` and `Skill`
+map to nothing. The preload is dropped: agy's `skills:` takes skill paths, and which folder they
+start from is untested.
 
 ## `comparing-products` is a skill, not an agent
 
