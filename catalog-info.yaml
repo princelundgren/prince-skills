@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: prince-skills
+  description: Rules, skills and hooks that make coding agents check facts and own mistakes
+spec:
+  type: library
+  lifecycle: production
+  owner: prince
+  system: agent-tools
