@@ -4,7 +4,7 @@ This repository is public: everything in it, its commits and its pull requests a
 nothing about the maintainer's own machines, accounts, private repositories or employer.
 
 - **Sources and generated files.** Edit `guidelines/`, `skills/`, `agents/` and `hooks/*.js`; then
-  `npm run generate`, which writes `hooks/hooks.json`, `QWEN.md` and `kiro/`. Never edit those by
+  `npm run generate`, which writes `hooks/hooks.json`, `QWEN.md`, `kiro/` and `agy/`. Never edit those by
   hand: CI fails when they differ from what the generator writes.
 - **Test:** one file with `node --test test/<name>.test.mjs`, all of them with `npm test`. A bare
   `node --test test/` fails.

@@ -1,0 +1,11 @@
+{
+  "prince-skills": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "node ./hooks/agy-fact-check-nudge.js",
+        "timeout": 10
+      }
+    ]
+  }
+}
